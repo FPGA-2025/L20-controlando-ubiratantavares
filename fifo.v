@@ -28,18 +28,14 @@ module fifo(
             rd_ptr <= 0;
             fifo_words <= 0;
         end else begin
-            // Escrita
             if (wr_en && !full) begin
                 mem[wr_ptr] <= data_in;
                 wr_ptr <= wr_ptr + 1;
             end
-
-            // Leitura
             if (rd_en && !empty) begin
                 data_out <= mem[rd_ptr];
                 rd_ptr <= rd_ptr + 1;
             end
-
             // Atualiza contador de palavras
             case ({wr_en && !full, rd_en && !empty})
                 2'b10: fifo_words <= fifo_words + 1; // Apenas escrita
@@ -48,5 +44,4 @@ module fifo(
             endcase
         end
     end
-
 endmodule
